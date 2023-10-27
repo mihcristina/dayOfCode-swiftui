@@ -9,27 +9,34 @@ import SwiftUI
 
 struct DetailsView: View {
 
+    @State var title: String
+    @State var image: String?
+    @State var voteAverage: Double
+    @State var description: String
+
     let secondary = Color("secondary")
 
     var body: some View {
-        ScrollView {
+
+        NavigationStack {
             VStack {
-                Text("A Órfã 2: A origem")
+                Text(title)
                     .foregroundColor(.white)
                     .font(.title)
-                Image("aorfa")
-                    .resizable()
+                    .padding()
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500\(image ?? "")"))
                     .frame(width: 176, height: 235)
                     .clipped()
-                    .cornerRadius(10)
-                Text("Classificação dos usuários: 6.8")
+                    .cornerRadius(18)
+                Text("Classificação dos usuários: \(voteAverage.formatted())")
                     .foregroundColor(.white)
                     .font(.subheadline)
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+                Text(description)
                     .foregroundColor(.white)
                     .font(.callout)
+                    .padding()
             }
-            .frame(height: UIScreen.main.bounds.height)
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             .padding()
             .background(
                 LinearGradient(gradient: Gradient(colors: [.accentColor, secondary]), startPoint: .top, endPoint: .bottom)
@@ -41,6 +48,6 @@ struct DetailsView: View {
 
 struct DetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailsView()
+        DetailsView(title: "test", voteAverage: 0.0, description: "test")
     }
 }
